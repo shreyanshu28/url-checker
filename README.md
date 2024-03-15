@@ -1,6 +1,6 @@
 # url-checker
 
-The regex that checks the URL is taken from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url .
+The regex that checks the URL is taken from [stackoverflow](https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url) .
 It was later modified to also include slash at the end of the url which indicates a folder.
 
 # Testing
