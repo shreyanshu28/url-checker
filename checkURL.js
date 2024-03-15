@@ -23,19 +23,18 @@ function validateUrlFormat(url) {
 }
 
 function isFile(url) {
-    console.log("URL.split('/').pop().indexOf('.')", url.split('/').pop().indexOf('.'))
-    return url.split('/').pop().indexOf('.') > -1
+    return String(url).split('/').pop().indexOf('.') > -1
 }
 
 function isFolder(url) {
-    return url.split('/').pop().indexOf('.') === -1
+    return String(url).split('/').pop().indexOf('.') === -1
 }
 
 
 function checkUrlExistence(url) {
     if (validateUrlFormat(url)) {
         setTimeout(() => {
-            const exists = Math.random() < 0.8;
+            const exists = Math.random() < 0.9;
 
             if (exists) {
                 document.getElementById("checker-output").innerHTML = "The URL exists";
