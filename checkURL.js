@@ -4,7 +4,7 @@ const urlMsg = document.getElementById("checker-output")
 
 let searchVal = ''
 
-const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&//=]*)?\b/gi
 
 const regex = new RegExp(expression);
 
@@ -23,18 +23,19 @@ function validateUrlFormat(url) {
 }
 
 function isFile(url) {
-    return URL.split('/').pop().indexOf('.') > -1
+    console.log("URL.split('/').pop().indexOf('.')", url.split('/').pop().indexOf('.'))
+    return url.split('/').pop().indexOf('.') > -1
 }
 
 function isFolder(url) {
-    return URL.split('/').pop().indexOf('.') === -1
+    return url.split('/').pop().indexOf('.') === -1
 }
 
 
 function checkUrlExistence(url) {
     if (validateUrlFormat(url)) {
         setTimeout(() => {
-            const exists = Math.random() < 0.5;
+            const exists = Math.random() < 0.8;
 
             if (exists) {
                 document.getElementById("checker-output").innerHTML = "The URL exists";
