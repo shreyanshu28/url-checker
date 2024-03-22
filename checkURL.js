@@ -6,15 +6,15 @@ let searchVal = ''
 
 const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&//=]*)?\b/gi
 
-const regex = new RegExp(expression);
+const regex = new RegExp(expression)
 
 function throttle(func, delay) {
     let timeout;
     return function (...args) {
-        clearTimeout(timeout);
+        clearTimeout(timeout)
         timeout = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
+            func.apply(this, args)
+        }, delay)
     };
 }
 
@@ -31,34 +31,43 @@ function isFolder(url) {
 }
 
 
-function checkUrlExistence(url) {
+async function checkUrlExistence(url) {
     if (validateUrlFormat(url)) {
-        setTimeout(() => {
-            const exists = Math.random() < 0.9;
 
-            if (exists) {
-                document.getElementById("checker-output").innerHTML = "The URL exists";
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        const exists = Math.random() < 0.9
 
-                if (isFile(url)) {
-                    document.getElementById("checker-output").innerHTML = "The URL exists and is a file";
-                }
+        if (exists) {
+            document.getElementById("checker-output").innerHTML = "The URL exists"
 
-                else if (isFolder(url)) {
-                    document.getElementById("checker-output").innerHTML = "The URL exists and is a folder";
-                }
-
-            } else {
-                document.getElementById("checker-output").innerHTML = "URL does not exist";
+            if (isFile(url)) {
+                document.getElementById("checker-output").innerHTML = "The URL exists and is a file"
             }
-        }, 1000);
+
+            else if (isFolder(url)) {
+                document.getElementById("checker-output").innerHTML = "The URL exists and is a folder"
+            }
+
+        } else {
+            document.getElementById("checker-output").innerHTML = "URL does not exist"
+        }
     } else {
-        document.getElementById("checker-output").innerHTML = "Invalid URL format";
+        document.getElementById("checker-output").innerHTML = "Invalid URL format"
     }
 }
 
 
-urlInput.addEventListener('keyup', throttle((e) => {
-    const searchVal = e.target.value.trim();
-    console.log("searchVal", searchVal)
-    checkUrlExistence(searchVal);
-}, 500));
+let currentRequest = null
+
+urlInput.addEventListener('input', throttle((e) => {
+    const searchVal = e.target.value.trim()
+
+    if (currentRequest) {
+        clearTimeout(currentRequest)
+    }
+    currentRequest = setTimeout(() => {
+        checkUrlExistence(searchVal) 
+    }, 500);
+
+}));
