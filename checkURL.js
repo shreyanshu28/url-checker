@@ -30,13 +30,16 @@ function isFolder(url) {
     return String(url).split('/').pop().indexOf('.') === -1
 }
 
+function getResponse() {
+    return Math.random() < 0.9
+}
 
 async function checkUrlExistence(url) {
     if (validateUrlFormat(url)) {
 
         await new Promise(resolve => setTimeout(resolve, 1000))
         
-        const exists = Math.random() < 0.9
+        const exists = getResponse()
 
         if (exists) {
             document.getElementById("checker-output").innerHTML = "The URL exists"
@@ -66,6 +69,7 @@ urlInput.addEventListener('input', throttle((e) => {
     if (currentRequest) {
         clearTimeout(currentRequest)
     }
+    
     currentRequest = setTimeout(() => {
         checkUrlExistence(searchVal) 
     }, 500);
